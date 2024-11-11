@@ -95,15 +95,17 @@ const floorPlanResources = [
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold text-center mb-8">Photo Gallery</h1>
       
-      <div class="flex justify-center gap-4 mb-8" id="category-filters">
-        {categories.map(category => (
-          <button
-            class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary-100 transition-colors"
-            data-category={category.id}
-          >
-            {category.name}
-          </button>
-        ))}
+      <div class="overflow-x-auto -mx-4 px-4 mb-8"> <!-- Add wrapper div -->
+        <div class="flex justify-center gap-4 min-w-max" id="category-filters">
+          {categories.map(category => (
+            <button
+              class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary-100 transition-colors whitespace-nowrap"
+              data-category={category.id}
+            >
+              {category.name}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16" id="gallery">
