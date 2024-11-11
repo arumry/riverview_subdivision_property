@@ -26,16 +26,25 @@
         modestbranding: 1,
         playsinline: 1,
         enablejsapi: 1,
-        playlist: '1ChEzD745Hc' // Required for looping
+        rel: 0,
+        playlist: '1ChEzD745Hc', // Required for looping
+        vq: 'hd1080', // Force 1080p quality
+        origin: window.location.origin,
+        widget_referrer: window.location.origin
       },
       events: {
         onReady: (event) => {
+          event.target.setPlaybackQuality('hd1080');
           event.target.playVideo();
           resizeVideo();
         },
         onStateChange: (event) => {
           if (event.data === YT.PlayerState.ENDED) {
             player.playVideo();
+          }
+          // Force HD quality again if it changes
+          if (event.data === YT.PlayerState.PLAYING) {
+            event.target.setPlaybackQuality('hd1080');
           }
         }
       }
@@ -78,9 +87,16 @@
 
   #player {
     pointer-events: none;
+    opacity: 0.99; /* Helps prevent YouTube branding */
   }
 
   #player iframe {
     pointer-events: none;
+    opacity: 0.99; /* Helps prevent YouTube branding */
+  }
+
+  /* Hide YouTube iframe until it's ready */
+  #player:not(.ready) iframe {
+    visibility: hidden;
   }
 </style>
