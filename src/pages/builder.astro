@@ -1,60 +1,63 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 
 const services = [
   {
-    title: 'Construction',
-    description: 'Building from scratch or making additions with expert craftsmanship.',
-    icon: '🏗️'
+    title: "Construction",
+    description:
+      "Building from scratch or making additions with expert craftsmanship.",
+    icon: "🏗️",
   },
   {
-    title: 'Architectural Design',
-    description: 'Meticulously crafted floor plans and 3D visuals to bring your vision to life.',
-    icon: '📐'
+    title: "Architectural Design",
+    description:
+      "Meticulously crafted floor plans and 3D visuals to bring your vision to life.",
+    icon: "📐",
   },
   {
-    title: 'Project Consulting',
-    description: 'Expert guidance through every construction phase.',
-    icon: '📋'
+    title: "Project Consulting",
+    description: "Expert guidance through every construction phase.",
+    icon: "📋",
   },
   {
-    title: 'Real Estate Development',
-    description: 'Maximizing property potential and investment returns.',
-    icon: '🏘️'
-  }
+    title: "Real Estate Development",
+    description: "Maximizing property potential and investment returns.",
+    icon: "🏘️",
+  },
 ];
 
 const floorPlanPartners = [
   {
-    name: 'HousePlans.com',
-    description: 'Extensive collection of mountain home designs optimized for scenic views.',
+    name: "HousePlans.com",
+    description:
+      "Extensive collection of mountain home designs optimized for scenic views.",
     features: [
-      'View-optimized layouts',
-      'Mountain architectural styles',
-      'Customizable plans'
+      "View-optimized layouts",
+      "Mountain architectural styles",
+      "Customizable plans",
     ],
-    url: 'https://www.houseplans.com'
+    url: "https://www.houseplans.com",
   },
   {
-    name: 'TheHouseDesigners.com',
-    description: 'Luxury home plans perfect for our premium lots.',
+    name: "TheHouseDesigners.com",
+    description: "Luxury home plans perfect for our premium lots.",
     features: [
-      'Award-winning designs',
-      'Energy-efficient options',
-      'Virtual walkthroughs'
+      "Award-winning designs",
+      "Energy-efficient options",
+      "Virtual walkthroughs",
     ],
-    url: 'https://www.thehousedesigners.com'
+    url: "https://www.thehousedesigners.com",
   },
   {
-    name: 'DreamHomeSource.com',
-    description: 'Contemporary designs that embrace natural surroundings.',
+    name: "DreamHomeSource.com",
+    description: "Contemporary designs that embrace natural surroundings.",
     features: [
-      'Modern floor plans',
-      'Indoor-outdoor living',
-      'Flexible spaces'
+      "Modern floor plans",
+      "Indoor-outdoor living",
+      "Flexible spaces",
     ],
-    url: 'https://www.dreamhomesource.com'
-  }
+    url: "https://www.dreamhomesource.com",
+  },
 ];
 ---
 
@@ -62,84 +65,129 @@ const floorPlanPartners = [
   <div class="pt-24 pb-12">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold text-center mb-8">Cornerstone Construction LLC</h1>
-        
+        <h1 class="text-4xl font-bold text-center mb-8">
+          Cornerstone Construction LLC
+        </h1>
+
         <div class="prose prose-lg mx-auto mb-12">
-          <p class="text-xl text-center mb-8">Four decades of unwavering commitment to construction mastery. Serving northern New Hampshire.</p>
-          
+          <p class="text-xl text-center mb-8">
+            Four decades of unwavering commitment to construction mastery.
+            Serving northern New Hampshire.
+          </p>
+
           <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
             <h2 class="text-2xl font-bold mb-4">Who We Are</h2>
-            <p>Headquartered in Manchester, with a remote office in Littleton, NH, Cornerstone Construction delivers expert building services to residential and commercial clients throughout northern New Hampshire.</p>
-            <p class="mt-4">Our journey in construction is driven by a genuine love for bringing visions to life. We're dedicated to creating spaces that aren't just built to last, but are designed to be loved, lived in, and cherished.</p>
+            <p>
+              Headquartered in Manchester, with a remote office in Littleton,
+              NH, Cornerstone Construction delivers expert building services to
+              residential and commercial clients throughout northern New
+              Hampshire.
+            </p>
+            <p class="mt-4">
+              Our journey in construction is driven by a genuine love for
+              bringing visions to life. We're dedicated to creating spaces that
+              aren't just built to last, but are designed to be loved, lived in,
+              and cherished.
+            </p>
           </div>
 
           <div class="grid md:grid-cols-2 gap-8 mb-12">
             <div class="bg-white rounded-lg shadow-lg p-6">
               <h3 class="text-xl font-bold mb-3">Dave Reilly</h3>
-              <p class="text-gray-600">Co-founder with over forty years of experience mastering every aspect of construction, from laying foundations to the final touches.</p>
+              <p class="text-gray-600">
+                Co-founder with over forty years of experience mastering every
+                aspect of construction, from laying foundations to the final
+                touches.
+              </p>
             </div>
             <div class="bg-white rounded-lg shadow-lg p-6">
               <h3 class="text-xl font-bold mb-3">Aaron Rumery</h3>
-              <p class="text-gray-600">Co-founder known for his strategic vision and exceptional project management skills.</p>
+              <p class="text-gray-600">
+                Co-founder known for his strategic vision and exceptional
+                project management skills.
+              </p>
             </div>
           </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {services.map(service => (
-              <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div class="text-4xl mb-4">{service.icon}</div>
-                <h3 class="font-bold mb-2">{service.title}</h3>
-                <p class="text-sm text-gray-600">{service.description}</p>
-              </div>
-            ))}
+            {
+              services.map((service) => (
+                <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                  <div class="text-4xl mb-4">{service.icon}</div>
+                  <h3 class="font-bold mb-2">{service.title}</h3>
+                  <p class="text-sm text-gray-600">{service.description}</p>
+                </div>
+              ))
+            }
           </div>
 
           <div class="bg-gray-50 rounded-lg p-8 mb-12">
-            <h2 class="text-3xl font-bold text-center mb-8">Floor Plan Partners</h2>
+            <h2 class="text-3xl font-bold text-center mb-8">
+              Floor Plan Partners
+            </h2>
             <p class="text-center text-gray-600 mb-12">
-              We've partnered with leading home plan providers to offer you an extensive selection of designs perfectly suited for our mountain view lots. Choose from their collections or let us help you customize a plan to your exact specifications.
+              We've partnered with leading home plan providers to offer you an
+              extensive selection of designs perfectly suited for our mountain
+              view lots. Choose from their collections or let us help you
+              customize a plan to your exact specifications.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-8">
-              {floorPlanPartners.map(partner => (
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                  <h3 class="text-xl font-bold mb-3">{partner.name}</h3>
-                  <p class="text-gray-600 mb-4">{partner.description}</p>
-                  <ul class="space-y-2 mb-6">
-                    {partner.features.map(feature => (
-                      <li class="flex items-start">
-                        <svg class="w-5 h-5 text-primary-600 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={partner.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-primary-600 hover:text-primary-700 font-semibold text-sm"
-                  >
-                    Browse Plans →
-                  </a>
-                </div>
-              ))}
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+              {
+                floorPlanPartners.map((partner) => (
+                  <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
+                    <div class="flex-1">
+                      <h3 class="text-xl font-bold mb-3 truncate">
+                        {partner.name}
+                      </h3>
+                      <p class="text-gray-600 mb-4">{partner.description}</p>
+                      <ul class="space-y-2 mb-6">
+                        {partner.features.map((feature) => (
+                          <li class="flex items-start">
+                            <svg
+                              class="w-5 h-5 text-primary-600 mr-2 mt-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span class="text-sm">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <a
+                      href={partner.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-primary-600 hover:text-primary-700 font-semibold text-sm"
+                    >
+                      Browse Plans →
+                    </a>
+                  </div>
+                ))
+              }
             </div>
-          </div>
 
-          <div class="text-center">
-            <a 
-              href="https://cornerstoneconstruction.builders/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-block bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
-            >
-              Visit Builder's Website
-            </a>
+            <div class="text-center mt-8">
+              <a
+                href="https://cornerstoneconstruction.builders/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+              >
+                Visit Builder's Website
+              </a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</Layout>
+  </div></Layout
+>

@@ -1,4 +1,4 @@
----
+=---
 import Layout from '../layouts/Layout.astro';
 import 'photoswipe/style.css';
 
@@ -167,7 +167,6 @@ const floorPlanResources = [
   <script>
     import PhotoSwipe from 'photoswipe';
 
-    // Initialize PhotoSwipe
     const initPhotoSwipe = () => {
       const gallery = document.querySelector('#gallery');
       let pswp = null;
@@ -178,23 +177,42 @@ const floorPlanResources = [
         const target = e.target.closest('.gallery-item');
         if (!target) return;
 
-        const items = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'))
-          .map(element => ({
-            src: element.href,
-            width: parseInt(element.dataset.pswpWidth, 10),
-            height: parseInt(element.dataset.pswpHeight, 10),
-            alt: element.querySelector('img').alt
-          }));
+        const visibleItems = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+        const items = visibleItems.map(element => ({
+          src: element.href,
+          w: parseInt(element.dataset.pswpWidth, 10),
+          h: parseInt(element.dataset.pswpHeight, 10),
+          alt: element.querySelector('img').alt
+        }));
 
         const options = {
-          index: Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'))
-            .indexOf(target)
+          dataSource: items,
+          index: visibleItems.indexOf(target),
+          showHideAnimationType: 'fade',
+          closeOnVerticalDrag: true,
+          padding: { top: 20, bottom: 20, left: 20, right: 20 },
+          arrowPrev: true,
+          arrowNext: true,
+          counter: true,
+          bgOpacity: 0.9,
+          showHideOpacity: true
         };
 
-        pswp = new PhotoSwipe({
-          gallery,
-          children: items,
-          ...options
+        pswp = new PhotoSwipe(options);
+        pswp.on('uiRegister', function() {
+          pswp.ui.registerElement({
+            name: 'custom-caption',
+            order: 9,
+            isButton: false,
+            appendTo: 'root',
+            html: 'Caption text',
+            onInit: (el, pswp) => {
+              pswp.on('change', () => {
+                const currSlideElement = pswp.currSlide.data;
+                el.innerHTML = currSlideElement.alt || '';
+              });
+            }
+          });
         });
 
         pswp.init();

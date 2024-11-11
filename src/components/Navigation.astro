@@ -7,6 +7,17 @@ const links = [
 ];
 ---
 
+<script>
+  const menuButton = document.querySelector('[aria-label="Toggle menu"]');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuButton?.addEventListener('click', () => {
+    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>
+
 <header class="fixed w-full z-50 bg-white/90 backdrop-blur-sm shadow-sm">
   <nav class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
@@ -28,6 +39,7 @@ const links = [
       <button
         class="md:hidden text-gray-600"
         aria-label="Toggle menu"
+        aria-expanded="false"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +56,20 @@ const links = [
           />
         </svg>
       </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4">
+      <div class="flex flex-col space-y-4">
+        {links.map(link => (
+          <a
+            href={link.href}
+            class="text-gray-600 hover:text-primary-600 transition-colors"
+          >
+            {link.text}
+          </a>
+        ))}
+      </div>
     </div>
   </nav>
 </header>
