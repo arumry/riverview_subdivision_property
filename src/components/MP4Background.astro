@@ -3,7 +3,7 @@
 
 <div
   id="video-background"
-  class="absolute inset-0 w-full h-full pointer-events-none"
+  class="absolute inset-0 w-full h-full pointer-events-none overflow-hidden bg-black"
 >
   <video
     id="background-video"
@@ -11,41 +11,98 @@
     loop
     muted
     playsinline
-    class="w-full h-full object-cover"
+    preload="auto"
+    webkit-playsinline
+    x5-playsinline
+    class="absolute w-full h-full object-cover"
+    poster="/videos/background-poster.jpg"
   >
+    <!-- Multiple sources for better browser compatibility -->
+    <source src="/videos/background.webm" type="video/webm" />
     <source src="/videos/background.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
+    <source src="/videos/background.ogv" type="video/ogg" />
+    <!-- Fallback for older browsers -->
+    <img 
+      src="/videos/background-poster.png" 
+      alt="Riverview Subdivision" 
+      class="absolute w-full h-full object-cover"
+    />
   </video>
 </div>
 
 <script>
-  // Resize video to cover container
-  const resizeVideo = () => {
-    const videoElement = document.getElementById("background-video");
-    if (!videoElement) return;
+  const videoElement = document.getElementById("background-video") as HTMLVideoElement;
+  
+  // Check if the device is mobile
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const aspectRatio = 16 / 9;
+  // Attempt to play video with multiple fallback options
+  const playVideo = async () => {
+    if (!videoElement || !videoElement.paused) return;
 
-    let newWidth = width;
-    let newHeight = width / aspectRatio;
-
-    if (newHeight < height) {
-      newHeight = height;
-      newWidth = height * aspectRatio;
+    try {
+      const playPromise = videoElement.play();
+      
+      if (playPromise !== undefined) {
+        await playPromise;
+      }
+    } catch (err) {
+      console.log("Video autoplay failed:", err);
+      
+      // Fallback for mobile: try playing muted
+      if (isMobile) {
+        try {
+          videoElement.muted = true;
+          await videoElement.play();
+        } catch (mobileErr) {
+          console.log("Mobile fallback failed:", mobileErr);
+        }
+      }
     }
-
-    videoElement.style.width = `${newWidth}px`;
-    videoElement.style.height = `${newHeight}px`;
-    videoElement.style.position = "absolute";
-    videoElement.style.left = `${(width - newWidth) / 2}px`;
-    videoElement.style.top = `${(height - newHeight) / 2}px`;
   };
 
-  // Handle window resize
-  window.addEventListener("resize", resizeVideo);
+  // Optimize video loading based on connection speed
+  if ('connection' in navigator) {
+    const connection = navigator.connection as any;
+    if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+      videoElement?.setAttribute('preload', 'none');
+    }
+  }
 
-  // Initial resize
-  document.addEventListener("DOMContentLoaded", resizeVideo);
+  // Play video when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', playVideo);
+  } else {
+    playVideo();
+  }
+
+  // Handle visibility changes
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      playVideo();
+    } else {
+      videoElement?.pause();
+    }
+  });
+
+  // Handle page focus
+  window.addEventListener('focus', playVideo);
+
+  // Handle mobile specific events
+  if (isMobile) {
+    window.addEventListener('orientationchange', playVideo);
+    document.addEventListener('touchstart', () => {
+      if (videoElement?.paused) playVideo();
+    });
+  }
+
+  // Ensure video plays after any user interaction
+  document.addEventListener('click', () => {
+    if (videoElement?.paused) playVideo();
+  });
+  document.addEventListener('touchend', () => {
+    if (videoElement?.paused) playVideo();
+  });
 </script>
