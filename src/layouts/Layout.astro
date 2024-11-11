@@ -1,0 +1,40 @@
+---
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { 
+  title,
+  description = "Premium lots with stunning mountain and Connecticut River views in Littleton, NH"
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | Riverview Subdivision</title>
+  </head>
+  <body>
+    <Navigation />
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --accent: 14, 165, 233;
+    scroll-behavior: smooth;
+  }
+  html {
+    font-family: system-ui, sans-serif;
+    background: #fff;
+  }
+</style>

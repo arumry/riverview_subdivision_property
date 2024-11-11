@@ -1,0 +1,32 @@
+---
+import YouTubeBackground from './YouTubeBackground.astro';
+---
+
+<section class="relative h-screen">
+  <YouTubeBackground />
+  <div class="absolute inset-0 bg-black/50 z-10"></div>
+  <div class="relative h-full flex items-center justify-center text-center z-20">
+    <div class="max-w-4xl px-4">
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">
+        Welcome to Riverview Subdivision
+      </h1>
+      <p class="text-xl md:text-2xl text-white mb-8">
+        Premium lots between 3-5 acres with stunning mountain and Connecticut River views in Littleton, NH
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/contact"
+          class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+        >
+          Schedule a Visit
+        </a>
+        <a
+          href="/gallery"
+          class="bg-white hover:bg-gray-100 text-gray-900 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+        >
+          View Gallery
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

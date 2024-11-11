@@ -1,0 +1,231 @@
+---
+import Layout from '../layouts/Layout.astro';
+import 'photoswipe/style.css';
+
+const galleryImages = [
+  {
+    src: '/images/lot-1.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Lot 1 with mountain views',
+    category: 'subdivision'
+  },
+  {
+    src: '/images/lot-2.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Lot 2 with river frontage',
+    category: 'subdivision'
+  },
+  {
+    src: '/images/lot-3.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Corner Lot 3',
+    category: 'subdivision'
+  },
+  {
+    src: '/images/elevation-1.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Modern Farmhouse Front Elevation',
+    category: 'elevation'
+  },
+  {
+    src: '/images/floorplan-main.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Main Level Floor Plan',
+    category: 'floorplan'
+  },
+  {
+    src: '/images/floorplan-lower.jpg',
+    width: 1200,
+    height: 800,
+    alt: 'Lower Level Floor Plan',
+    category: 'floorplan'
+  },
+  {
+    src: '/images/floorplan-3d.jpg',
+    width: 1200,
+    height: 800,
+    alt: '3D Floor Plan View',
+    category: 'floorplan'
+  }
+];
+
+const categories = [
+  { id: 'all', name: 'All' },
+  { id: 'subdivision', name: 'Subdivision' },
+  { id: 'elevation', name: 'Elevation Plans' },
+  { id: 'floorplan', name: 'Floor Plans' }
+];
+
+const floorPlanResources = [
+  {
+    name: 'HousePlans.com',
+    url: 'https://www.houseplans.com',
+    description: 'Browse thousands of architect-designed plans with mountain and view-lot orientations.',
+    icon: '🏡'
+  },
+  {
+    name: 'TheHouseDesigners.com',
+    url: 'https://www.thehousedesigners.com',
+    description: 'Exclusive collection of luxury home plans perfect for mountain settings.',
+    icon: '✨'
+  },
+  {
+    name: 'DreamHomeSource.com',
+    url: 'https://www.dreamhomesource.com',
+    description: 'Customizable plans featuring open concepts and large windows to maximize views.',
+    icon: '🎨'
+  }
+];
+---
+
+<Layout title="Photo Gallery">
+  <div class="pt-24 pb-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-center mb-8">Photo Gallery</h1>
+      
+      <div class="flex justify-center gap-4 mb-8" id="category-filters">
+        {categories.map(category => (
+          <button
+            class="px-4 py-2 rounded-lg bg-gray-200 hover:bg-primary-100 transition-colors"
+            data-category={category.id}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16" id="gallery">
+        {galleryImages.map((image, index) => (
+          <a
+            href={image.src}
+            data-pswp-width={image.width}
+            data-pswp-height={image.height}
+            data-category={image.category}
+            class="gallery-item block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full h-64 object-cover"
+              loading="lazy"
+            />
+            <div class="p-4 bg-white">
+              <p class="text-gray-800 truncate">{image.alt}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-8">Floor Plan Resources</h2>
+        <p class="text-center text-gray-600 mb-8">
+          Explore these trusted resources for inspiration and floor plans that perfectly complement our mountain view lots.
+          Work with Cornerstone Construction to customize any plan to your specific needs.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          {floorPlanResources.map(resource => (
+            <div class="bg-white rounded-lg shadow-lg p-6 flex flex-col h-full">
+              <div class="flex-1">
+                <div class="text-4xl mb-4 text-center">{resource.icon}</div>
+                <h3 class="text-xl font-bold mb-3 text-center truncate px-2" title={resource.name}>
+                  {resource.name}
+                </h3>
+                <p class="text-gray-600 mb-4 text-center line-clamp-3">
+                  {resource.description}
+                </p>
+              </div>
+              <div class="pt-4 text-center border-t border-gray-100">
+                <a
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block text-primary-600 hover:text-primary-700 font-semibold"
+                >
+                  Browse Plans →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import PhotoSwipe from 'photoswipe';
+
+    // Initialize PhotoSwipe
+    const initPhotoSwipe = () => {
+      const gallery = document.querySelector('#gallery');
+      let pswp = null;
+
+      gallery.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const target = e.target.closest('.gallery-item');
+        if (!target) return;
+
+        const items = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'))
+          .map(element => ({
+            src: element.href,
+            width: parseInt(element.dataset.pswpWidth, 10),
+            height: parseInt(element.dataset.pswpHeight, 10),
+            alt: element.querySelector('img').alt
+          }));
+
+        const options = {
+          index: Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'))
+            .indexOf(target)
+        };
+
+        pswp = new PhotoSwipe({
+          gallery,
+          children: items,
+          ...options
+        });
+
+        pswp.init();
+      });
+    };
+
+    // Initialize category filtering
+    const initFilters = () => {
+      const filters = document.querySelectorAll('#category-filters button');
+      const items = document.querySelectorAll('.gallery-item');
+
+      filters.forEach(filter => {
+        filter.addEventListener('click', () => {
+          const category = filter.dataset.category;
+          
+          // Update active filter style
+          filters.forEach(f => f.classList.remove('bg-primary-600', 'text-white'));
+          filter.classList.add('bg-primary-600', 'text-white');
+
+          // Filter gallery items
+          items.forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // Set initial active state
+      filters[0].click();
+    };
+
+    // Initialize when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      initPhotoSwipe();
+      initFilters();
+    });
+  </script>
+</Layout>

@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LotCard from '../components/LotCard.astro';
+import MapView from '../components/MapView.astro';
+
+const lots = [
+  {
+    id: 1,
+    name: 'Lot 1',
+    size: '1.2 acres',
+    price: '$175,000',
+    description: 'Premium corner lot featuring stunning mountain views and southern exposure. Perfect for a walk-out basement design with natural landscaping opportunities.',
+    features: [
+      'Mountain Views',
+      'Southern Exposure',
+      'Walk-out Potential',
+      'Underground Utilities',
+      'Paved Road Access'
+    ]
+  },
+  {
+    id: 2,
+    name: 'Lot 2',
+    size: '1.5 acres',
+    price: '$195,000',
+    description: 'Spectacular river view lot with a level building site. Features mature trees along the perimeter providing natural privacy.',
+    features: [
+      'River Views',
+      'Level Building Site',
+      'Privacy Buffer',
+      'Underground Utilities',
+      'Natural Gas Available'
+    ]
+  },
+  {
+    id: 3,
+    name: 'Lot 3',
+    size: '2.1 acres',
+    price: '$225,000',
+    description: 'Our largest premium lot offering panoramic views of both mountains and river. Extended road frontage with multiple building site options.',
+    features: [
+      'Premium Corner Lot',
+      'Panoramic Views',
+      'Extra Frontage',
+      'Underground Utilities',
+      'Multiple Building Sites'
+    ]
+  }
+];
+---
+
+<Layout title="Available Lots">
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script 
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <div class="pt-24 pb-12">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-center mb-4">Available Lots</h1>
+      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+        Discover your perfect homesite at Riverview Subdivision. Each lot has been carefully designed to maximize views and privacy while providing easy access to utilities and amenities.
+      </p>
+
+      <div class="grid lg:grid-cols-3 gap-8 mb-12">
+        <div class="lg:col-span-2">
+          <MapView />
+        </div>
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-2xl font-semibold mb-4">Quick Facts</h2>
+          <ul class="space-y-4">
+            <li class="flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mr-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </span>
+              <span>All lots are ready for immediate building</span>
+            </li>
+            <li class="flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mr-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </span>
+              <span>Underground utilities available</span>
+            </li>
+            <li class="flex items-center">
+              <span class="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mr-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+              </span>
+              <span>Custom home designs welcome</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {lots.map(lot => <LotCard lot={lot} />)}
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,41 @@
+---
+---
+
+<div class="bg-white rounded-lg shadow-lg p-6">
+  <div class="aspect-w-16 aspect-h-9">
+    <div id="map" class="w-full h-full rounded-lg"></div>
+  </div>
+</div>
+
+<script>
+  // Initialize the map when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    // Create a map centered on the subdivision
+    const map = L.map('map').setView([44.3052, -71.7751], 16);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Add markers for each lot
+    const lots = [
+      { id: 1, lat: 44.3055, lng: -71.7748, name: 'Lot 1' },
+      { id: 2, lat: 44.3053, lng: -71.7750, name: 'Lot 2' },
+      { id: 3, lat: 44.3051, lng: -71.7753, name: 'Lot 3' }
+    ];
+
+    lots.forEach(lot => {
+      const marker = L.marker([lot.lat, lot.lng])
+        .bindPopup(`<b>${lot.name}</b><br>Click for details`)
+        .addTo(map);
+
+      marker.on('click', () => {
+        document.querySelector(`[data-lot-id="${lot.id}"]`)?.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'center'
+        });
+      });
+    });
+  });
+</script>
