@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import 'photoswipe/style.css';
 
 const services = [
   {
@@ -9,7 +10,7 @@ const services = [
     icon: "🏗️",
   },
   {
-    title: "Architectural Design",
+    title: "Architectural Design", 
     description:
       "Meticulously crafted floor plans and 3D visuals to bring your vision to life.",
     icon: "📐",
@@ -33,7 +34,7 @@ const floorPlanPartners = [
       "Extensive collection of mountain home designs optimized for scenic views.",
     features: [
       "View-optimized layouts",
-      "Mountain architectural styles",
+      "Mountain architectural styles", 
       "Customizable plans",
     ],
     url: "https://www.houseplans.com",
@@ -59,15 +60,60 @@ const floorPlanPartners = [
     url: "https://www.dreamhomesource.com",
   },
 ];
+
+const pastBuilds = [
+  {
+    src: '/images/1.webp',
+    width: 1200,
+    height: 800,
+    alt: 'Custom Mountain Home'
+  },
+  {
+    src: '/images/2.webp', 
+    width: 1200,
+    height: 800,
+    alt: 'Custom Ranch Home'
+  },
+  {
+    src: '/images/3.webp',
+    width: 1200,
+    height: 800,
+    alt: 'Custom Mountain Home'
+  },
+  {
+    src: '/images/4.webp',
+    width: 1200,
+    height: 800,
+    alt: 'Custom Mountain Home'
+  },
+  {
+    src: '/images/5.webp',
+    width: 1200,
+    height: 800,
+    alt: 'Custom Garage'
+  },
+  {
+    src: '/images/6.webp',
+    width: 1200,
+    height: 800,
+    alt: 'ICF Construction'
+  }
+];
 ---
 
 <Layout title="About Our Builder">
   <div class="pt-24 pb-12">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-bold text-center mb-8">
-          Cornerstone Construction LLC
-        </h1>
+        <div class="flex justify-center mb-12">
+          <a href="https://cornerstoneconstruction.builders" target="_blank" rel="noopener noreferrer">
+            <img 
+              src="/images/cornerstone_logo.webp"
+              alt="Cornerstone Construction LLC Logo"
+              class="h-32 w-auto"
+            />
+          </a>
+        </div>
 
         <div class="prose prose-lg mx-auto mb-12">
           <p class="text-xl text-center mb-8">
@@ -91,9 +137,43 @@ const floorPlanPartners = [
             </p>
           </div>
 
+          <div class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Past Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="gallery">
+              {pastBuilds.map((image) => (
+                <a
+                  href={image.src}
+                  data-pswp-width={image.width}
+                  data-pswp-height={image.height}
+                  class="gallery-item block rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    class="w-full h-64 object-cover"
+                    loading="lazy"
+                  />
+                  <div class="p-4 bg-white">
+                    <p class="text-gray-800 truncate">{image.alt}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+
           <div class="grid md:grid-cols-2 gap-8 mb-12">
             <div class="bg-white rounded-lg shadow-lg p-6">
-              <h3 class="text-xl font-bold mb-3">Dave Reilly</h3>
+              <div class="flex items-center mb-4">
+                <img 
+                  src="/images/dave.webp" 
+                  alt="Dave Reilly"
+                  class="w-24 h-24 rounded-full object-cover mr-4 border-2 border-primary-600"
+                />
+                <div>
+                  <h3 class="text-xl font-bold">Dave Reilly</h3>
+                  <p class="text-gray-600 text-sm">Co-founder</p>
+                </div>
+              </div>
               <p class="text-gray-600">
                 Co-founder with over forty years of experience mastering every
                 aspect of construction, from laying foundations to the final
@@ -101,7 +181,17 @@ const floorPlanPartners = [
               </p>
             </div>
             <div class="bg-white rounded-lg shadow-lg p-6">
-              <h3 class="text-xl font-bold mb-3">Aaron Rumery</h3>
+              <div class="flex items-center mb-4">
+                <img 
+                  src="/images/aaron.webp" 
+                  alt="Aaron Rumery"
+                  class="w-24 h-24 rounded-full object-cover mr-4 border-2 border-primary-600"
+                />
+                <div>
+                  <h3 class="text-xl font-bold">Aaron Rumery</h3>
+                  <p class="text-gray-600 text-sm">Co-founder</p>
+                </div>
+              </div>
               <p class="text-gray-600">
                 Co-founder known for his strategic vision and exceptional
                 project management skills.
@@ -189,5 +279,41 @@ const floorPlanPartners = [
         </div>
       </div>
     </div>
-  </div></Layout
->
+  </div>
+</Layout>
+
+<script>
+  import PhotoSwipe from 'photoswipe';
+
+  const initPhotoSwipe = () => {
+    const gallery = document.querySelector('#gallery');
+    let pswp = null;
+
+    gallery.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      const target = e.target.closest('.gallery-item');
+      if (!target) return;
+
+      const items = Array.from(document.querySelectorAll('.gallery-item')).map(element => ({
+        src: element.href,
+        w: parseInt(element.dataset.pswpWidth, 10),
+        h: parseInt(element.dataset.pswpHeight, 10),
+        alt: element.querySelector('img').alt
+      }));
+
+      const options = {
+        dataSource: items,
+        index: Array.from(document.querySelectorAll('.gallery-item')).indexOf(target),
+        showHideAnimationType: 'fade',
+        bgOpacity: 0.9,
+        showHideOpacity: true
+      };
+
+      pswp = new PhotoSwipe(options);
+      pswp.init();
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', initPhotoSwipe);
+</script>
